@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Find - 대학 분실물 통합 포털</title>
+  <!-- Modern Font: Outfit (Header) & Inter (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ================= AUTH SCREEN ================= -->
+  <div id="auth-screen" class="auth-container">
+    <div class="auth-background-effects">
+      <div class="circle circle-1"></div>
+      <div class="circle circle-2"></div>
+    </div>
+    
+    <div class="auth-card-wrapper">
+      <div class="auth-header">
+        <div class="logo-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><path d="M11 8v6"></path><path d="M8 11h6"></path></svg>
+        </div>
+        <h1>Campus Find</h1>
+        <p class="subtitle">대학 분실물 통합 매칭 서비스</p>
+        <div class="developer-badge">Developer: 2026131210 김유민</div>
+      </div>
+
+      <!-- Login Form Card -->
+      <div id="login-card" class="auth-card">
+        <h2>로그인</h2>
+        <form id="login-form">
+          <div class="input-group">
+            <label for="login-username">학번 또는 이메일</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <input type="text" id="login-username" placeholder="학번 또는 이메일을 입력하세요" required autocomplete="username">
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="login-password">비밀번호</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <input type="password" id="login-password" placeholder="비밀번호를 입력하세요" required autocomplete="current-password">
+            </div>
+          </div>
+          <div id="login-error" class="error-msg hidden"></div>
+          <button type="submit" class="btn btn-primary btn-block">로그인</button>
+        </form>
+        <div class="auth-switch">
+          계정이 없으신가요? <button id="to-signup-btn">회원가입</button>
+        </div>
+      </div>
+
+      <!-- Signup Form Card (Hidden initially) -->
+      <div id="signup-card" class="auth-card hidden">
+        <h2>회원가입</h2>
+        <form id="signup-form">
+          <div class="input-group">
+            <label for="signup-name">이름</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <input type="text" id="signup-name" placeholder="이름을 입력하세요" required>
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="signup-student-id">학번</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              <input type="text" id="signup-student-id" placeholder="10자리 학번을 입력하세요 (예: 2026131210)" required pattern="[0-9]{10}" title="학번은 10자리 숫자여야 합니다.">
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="signup-email">이메일</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              <input type="email" id="signup-email" placeholder="이메일 주소를 입력하세요" required>
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="signup-password">비밀번호</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <input type="password" id="signup-password" placeholder="비밀번호를 입력하세요" required minlength="6">
+            </div>
+          </div>
+          <div id="signup-error" class="error-msg hidden"></div>
+          <button type="submit" class="btn btn-primary btn-block">회원가입 완료</button>
+        </form>
+        <div class="auth-switch">
+          이미 계정이 있으신가요? <button id="to-login-btn">로그인</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================= MAIN APP SCREEN ================= -->
+  <div id="app-screen" class="app-container hidden">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <span>Campus Find</span>
+        </div>
+        <div class="sidebar-subtitle">2026131210 김유민</div>
+      </div>
+      
+      <div class="user-profile-widget">
+        <div class="user-avatar" id="nav-user-avatar">U</div>
+        <div class="user-info">
+          <div class="user-name" id="nav-user-name">사용자</div>
+          <div class="user-student-id" id="nav-user-id">2026131210</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-menu">
+        <button class="nav-item active" data-target="feed-section">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+          <span>분실/습득 피드</span>
+        </button>
+        <button class="nav-item" data-target="register-section">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>게시물 등록</span>
+        </button>
+        <button class="nav-item" data-target="chat-section">
+          <div class="chat-nav-wrapper">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            <span>채팅 메시지</span>
+            <span class="badge hidden" id="chat-unread-badge">0</span>
+          </div>
+        </button>
+        <button class="nav-item" data-target="mypage-section">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span>내 정보 & 관리</span>
+        </button>
+      </nav>
+
+      <button id="logout-btn" class="logout-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        <span>로그아웃</span>
+      </button>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- ================= SECTION 1: FEED ================= -->
+      <section id="feed-section" class="content-section">
+        <div class="section-header">
+          <div>
+            <h1>분실/습득 피드</h1>
+            <p class="section-desc">학교 내의 모든 분실물 및 습득물 리스트를 조회하고 검색합니다.</p>
+          </div>
+          <button class="btn btn-primary" id="dashboard-register-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            새 글 등록
+          </button>
+        </div>
+
+        <!-- Filters Block -->
+        <div class="filters-container">
+          <div class="search-box-row">
+            <div class="search-input-wrapper">
+              <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="filter-search" placeholder="물품명 또는 설명 검색...">
+            </div>
+            <button class="btn btn-secondary" id="search-trigger-btn">검색</button>
+          </div>
+
+          <div class="filter-dropdowns-row">
+            <div class="filter-group">
+              <label for="filter-type">구분</label>
+              <select id="filter-type">
+                <option value="all">전체보기</option>
+                <option value="lost">분실물 (찾아요)</option>
+                <option value="found">습득물 (보관중)</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="filter-category">카테고리</label>
+              <select id="filter-category">
+                <option value="all">전체 카테고리</option>
+                <option value="electronics">전자기기 (에어팟, 노트북 등)</option>
+                <option value="wallet-keys">지갑 / 열쇠 / 귀중품</option>
+                <option value="books">도서 / 문구류</option>
+                <option value="clothing">의류 / 잡화</option>
+                <option value="documents">카드 / 신분증 / 서류</option>
+                <option value="others">기타 물품</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="filter-location">장소</label>
+              <select id="filter-location">
+                <option value="all">전체 장소</option>
+                <option value="library">중앙도서관</option>
+                <option value="student-union">학생회관</option>
+                <option value="it-hall">IT공학관</option>
+                <option value="science-hall">자연과학관</option>
+                <option value="dormitory">기숙사</option>
+                <option value="playground">대운동장</option>
+                <option value="others">기타 구역</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feed Grid -->
+        <div class="feed-grid" id="feed-items-grid">
+          <!-- Dynamic post cards inserted here -->
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state hidden" id="feed-empty-state">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          <h3>일치하는 분실/습득물이 없습니다</h3>
+          <p>다른 검색어 또는 필터를 입력해 보시거나, 새로 게시물을 등록해 보세요.</p>
+        </div>
+      </section>
+
+
+      <!-- ================= SECTION 2: REGISTER ================= -->
+      <section id="register-section" class="content-section hidden">
+        <div class="section-header">
+          <div>
+            <h1 id="register-section-title">게시물 등록</h1>
+            <p class="section-desc">잃어버린 물건이나 보관 중인 습득물을 등록합니다.</p>
+          </div>
+        </div>
+
+        <div class="register-form-card">
+          <div class="form-tabs">
+            <button class="form-tab-btn active" id="tab-lost-btn" data-type="lost">
+              <span class="tab-dot dot-lost"></span> 분실물 등록
+            </button>
+            <button class="form-tab-btn" id="tab-found-btn" data-type="found">
+              <span class="tab-dot dot-found"></span> 습득물 등록
+            </button>
+          </div>
+
+          <form id="post-register-form">
+            <!-- Hidden Input for Editing -->
+            <input type="hidden" id="register-post-id" value="">
+
+            <div class="form-grid">
+              <div class="form-group col-span-2">
+                <label for="reg-title">물품명 <span class="required">*</span></label>
+                <input type="text" id="reg-title" placeholder="예) 도서관 4층 노트북실 로지텍 마우스" required>
+              </div>
+
+              <div class="form-group">
+                <label for="reg-category">카테고리 <span class="required">*</span></label>
+                <select id="reg-category" required>
+                  <option value="" disabled selected>선택하세요</option>
+                  <option value="electronics">전자기기 (에어팟, 노트북 등)</option>
+                  <option value="wallet-keys">지갑 / 열쇠 / 귀중품</option>
+                  <option value="books">도서 / 문구류</option>
+                  <option value="clothing">의류 / 잡화</option>
+                  <option value="documents">카드 / 신분증 / 서류</option>
+                  <option value="others">기타 물품</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="reg-location" id="label-reg-location">분실 장소 <span class="required">*</span></label>
+                <select id="reg-location" required>
+                  <option value="" disabled selected>선택하세요</option>
+                  <option value="library">중앙도서관</option>
+                  <option value="student-union">학생회관</option>
+                  <option value="it-hall">IT공학관</option>
+                  <option value="science-hall">자연과학관</option>
+                  <option value="dormitory">기숙사</option>
+                  <option value="playground">대운동장</option>
+                  <option value="others">기타 구역</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="reg-date" id="label-reg-date">분실 날짜 <span class="required">*</span></label>
+                <input type="date" id="reg-date" required>
+              </div>
+
+              <div class="form-group">
+                <label>이미지 업로드</label>
+                <div class="image-upload-area" id="image-drag-area">
+                  <input type="file" id="reg-image-file" accept="image/*" class="hidden">
+                  <div class="upload-prompt" id="upload-prompt-view">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                    <span>사진 클릭 또는 드래그</span>
+                    <span class="upload-tip">JPG, PNG (최대 2MB)</span>
+                  </div>
+                  <div class="image-preview-wrapper hidden" id="upload-preview-view">
+                    <img id="upload-preview-img" src="" alt="업로드 이미지">
+                    <button type="button" class="btn-remove-img" id="btn-remove-preview-img">✕</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-span-2">
+                <label for="reg-description">상세 설명 <span class="required">*</span></label>
+                <textarea id="reg-description" rows="5" placeholder="물건의 특징(색상, 흠집, 액세서리 여부 등)을 적어주시면 매칭률이 높아집니다." required></textarea>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn-secondary" id="reg-cancel-btn">작성 취소</button>
+              <button type="submit" class="btn btn-primary" id="reg-submit-btn">게시물 등록</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+
+      <!-- ================= SECTION 3: CHAT ================= -->
+      <section id="chat-section" class="content-section hidden">
+        <div class="chat-layout-card">
+          <!-- Left: Rooms List -->
+          <div class="chat-rooms-pane">
+            <div class="pane-header">
+              <h2>대화방 목록</h2>
+            </div>
+            <div class="rooms-list" id="chat-rooms-list">
+              <!-- Rooms rendered here -->
+            </div>
+          </div>
+
+          <!-- Right: Active Chat Window -->
+          <div class="chat-window-pane">
+            <div id="chat-window-placeholder" class="chat-placeholder">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              <h3>대화를 시작하세요</h3>
+              <p>피드 게시물에서 '연락하기'를 누르거나 목록에서 대화방을 선택해 직접 소통해 보세요.</p>
+            </div>
+
+            <div id="chat-window-active" class="chat-active hidden">
+              <!-- Chat Room Header -->
+              <div class="chat-active-header">
+                <div class="header-user-info">
+                  <div class="chat-partner-avatar" id="active-chat-partner-avatar">U</div>
+                  <div>
+                    <h3 id="active-chat-partner-name">김철수</h3>
+                    <span class="active-chat-partner-id" id="active-chat-partner-id">학번</span>
+                  </div>
+                </div>
+                
+                <!-- Linked Post Bar -->
+                <div class="linked-post-bar" id="active-chat-linked-post">
+                  <div class="linked-post-details">
+                    <span class="type-tag" id="active-chat-post-type">습득</span>
+                    <span class="title-text" id="active-chat-post-title">에어팟 프로</span>
+                  </div>
+                  <button class="btn btn-sm btn-secondary" id="active-chat-view-post-btn">게시물 보기</button>
+                </div>
+              </div>
+
+              <!-- Message History Area -->
+              <div class="messages-history" id="chat-messages-history">
+                <!-- Messages rendered here -->
+              </div>
+
+              <!-- Typing Indicator -->
+              <div class="typing-indicator-container hidden" id="chat-typing-indicator">
+                <div class="typing-bubble">
+                  <span class="typing-dot"></span>
+                  <span class="typing-dot"></span>
+                  <span class="typing-dot"></span>
+                </div>
+                <span class="typing-text">상대방이 타이핑 중입니다...</span>
+              </div>
+
+              <!-- Message Input -->
+              <form id="chat-message-form" class="message-input-form">
+                <input type="text" id="chat-message-input" placeholder="메시지를 입력해 주세요..." required autocomplete="off">
+                <button type="submit" class="btn btn-primary btn-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ================= SECTION 4: MY PAGE ================= -->
+      <section id="mypage-section" class="content-section hidden">
+        <div class="section-header">
+          <div>
+            <h1>내 정보 & 관리</h1>
+            <p class="section-desc">내가 작성한 분실/습득글의 상세 관리와 나의 활동 현황입니다.</p>
+          </div>
+        </div>
+
+        <div class="mypage-grid">
+          <!-- Profile Card -->
+          <div class="profile-summary-card">
+            <div class="profile-avatar-large" id="profile-avatar-lg">U</div>
+            <h2 id="profile-name">이름</h2>
+            <div class="profile-details-list">
+              <div class="profile-detail-item">
+                <span class="label">학번</span>
+                <span class="value" id="profile-student-id">학번</span>
+              </div>
+              <div class="profile-detail-item">
+                <span class="label">이메일</span>
+                <span class="value" id="profile-email">이메일</span>
+              </div>
+            </div>
+            <div class="profile-stats">
+              <div class="stat-box">
+                <div class="num" id="stat-lost-count">0</div>
+                <div class="txt">등록한 분실물</div>
+              </div>
+              <div class="stat-box">
+                <div class="num" id="stat-found-count">0</div>
+                <div class="txt">등록한 습득물</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- My Posts Management -->
+          <div class="my-posts-management">
+            <h2>내가 올린 게시글 목록</h2>
+            <div class="my-posts-list" id="my-posts-list-view">
+              <!-- My posts rendered here -->
+            </div>
+            
+            <div class="empty-state hidden" id="my-posts-empty">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="11" y2="17"></line></svg>
+              <p>아직 작성한 게시글이 없습니다.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <!-- ================= OVERLAYS & MODALS ================= -->
+
+  <!-- 1. Post Detail Modal -->
+  <div class="modal-overlay hidden" id="detail-modal">
+    <div class="modal-box modal-lg">
+      <button class="modal-close-btn" id="detail-close-btn">✕</button>
+      
+      <div class="modal-body-layout">
+        <!-- Left: Image Section -->
+        <div class="modal-image-panel" id="detail-img-panel">
+          <div class="fallback-icon-display" id="detail-fallback-icon">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+          </div>
+          <img id="detail-item-image" class="hidden" src="" alt="분실물 이미지">
+        </div>
+
+        <!-- Right: Info Section -->
+        <div class="modal-info-panel">
+          <div class="modal-info-header">
+            <div class="badge-row">
+              <span class="post-type-badge badge-lost" id="detail-type-badge">분실</span>
+              <span class="post-status-badge" id="detail-status-badge">찾는 중</span>
+            </div>
+            <h2 id="detail-title">아이폰 13 프로 실버</h2>
+            <div class="meta-row">
+              <span class="author-info">등록자: <strong id="detail-owner-name">김철수</strong></span>
+              <span class="divider">•</span>
+              <span class="date-info" id="detail-created-at">2시간 전</span>
+            </div>
+          </div>
+
+          <div class="info-list">
+            <div class="info-item">
+              <div class="info-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </div>
+              <div>
+                <div class="label" id="detail-location-label">분실 장소</div>
+                <div class="value" id="detail-location">중앙도서관 4층</div>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              </div>
+              <div>
+                <div class="label" id="detail-date-label">분실 날짜</div>
+                <div class="value" id="detail-date">2026년 06월 20일</div>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+              </div>
+              <div>
+                <div class="label">카테고리</div>
+                <div class="value" id="detail-category">지갑 / 귀중품</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="description-block">
+            <h3>상세 설명</h3>
+            <p id="detail-description">상세 설명이 나타납니다.</p>
+          </div>
+
+          <div class="modal-footer-actions">
+            <button class="btn btn-secondary flex-grow" id="detail-report-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              신고하기
+            </button>
+            <button class="btn btn-primary flex-grow" id="detail-contact-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              연락하기
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Report Modal -->
+  <div class="modal-overlay hidden" id="report-modal">
+    <div class="modal-box modal-sm">
+      <button class="modal-close-btn" id="report-close-btn">✕</button>
+      <h2>게시글 신고하기</h2>
+      <p class="modal-desc">이 게시물이 허위 정보이거나 대학 커뮤니티 가이드라인을 위반한 경우 신고해 주세요.</p>
+      
+      <form id="report-form">
+        <input type="hidden" id="report-post-id" value="">
+        
+        <div class="report-options-group">
+          <label class="report-option">
+            <input type="radio" name="report-reason" value="spam" checked>
+            <span>스팸 / 광고성 게시글</span>
+          </label>
+          <label class="report-option">
+            <input type="radio" name="report-reason" value="false-info">
+            <span>허위 정보 또는 장난성 글</span>
+          </label>
+          <label class="report-option">
+            <input type="radio" name="report-reason" value="inappropriate">
+            <span>부적절한 내용 / 비방 / 욕설</span>
+          </label>
+          <label class="report-option">
+            <input type="radio" name="report-reason" value="other">
+            <span>기타 사유</span>
+          </label>
+        </div>
+
+        <div class="form-group hidden" id="report-details-group">
+          <label for="report-details">상세 사유</label>
+          <textarea id="report-details" rows="3" placeholder="구체적인 사유를 입력해 주세요."></textarea>
+        </div>
+
+        <div class="modal-footer-actions">
+          <button type="button" class="btn btn-secondary" id="report-cancel-btn">취소</button>
+          <button type="submit" class="btn btn-danger">신고서 제출</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
